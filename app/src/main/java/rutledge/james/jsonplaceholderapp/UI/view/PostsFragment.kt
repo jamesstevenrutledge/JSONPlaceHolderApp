@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.koin.android.ext.android.inject
 import rutledge.james.jsonplaceholderapp.UI.view.adapter.PostListAdapter
+import rutledge.james.jsonplaceholderapp.UI.viewmodel.PostsViewModel
 import rutledge.james.jsonplaceholderapp.databinding.FragmentPostsViewBinding
 
 /**
@@ -17,6 +19,7 @@ import rutledge.james.jsonplaceholderapp.databinding.FragmentPostsViewBinding
  */
 class PostsFragment : Fragment() {
     private lateinit var bnd: FragmentPostsViewBinding
+    private val viewModel: PostsViewModel by inject()
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -35,8 +38,8 @@ class PostsFragment : Fragment() {
         )
 
         val dividerItemDecoration = DividerItemDecoration(
-                context,
-                linearLayoutManager.orientation
+            context,
+            linearLayoutManager.orientation
         )
 
         bnd.recyclerPosts.apply {
@@ -45,6 +48,20 @@ class PostsFragment : Fragment() {
             addItemDecoration(dividerItemDecoration)
         }
 
+        registerObservers()
+
         return bnd.root
+    }
+
+    private fun registerObservers() {
+        // The recyclerview should show contents of observablePosts
+        viewModel
+            .observablePosts
+            .observe(viewLifecycleOwner) { posts ->
+                bnd.recyclerPosts.adapter?.let { adapter ->
+                    adapter as PostListAdapter
+                    adapter.submitList(posts)
+                }
+            }
     }
 }
