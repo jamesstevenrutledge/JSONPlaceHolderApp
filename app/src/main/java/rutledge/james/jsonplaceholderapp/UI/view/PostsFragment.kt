@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import rutledge.james.jsonplaceholderapp.UI.view.adapter.PostListAdapter
 import rutledge.james.jsonplaceholderapp.databinding.FragmentPostsViewBinding
 
 /**
@@ -25,6 +26,8 @@ class PostsFragment : Fragment() {
         bnd = FragmentPostsViewBinding.inflate(inflater, container, false)
 
         // Recyclerview setup for displaying posts
+        val postsAdapter = PostListAdapter()
+
         val linearLayoutManager = LinearLayoutManager(
                 context,
                 RecyclerView.VERTICAL,
@@ -37,6 +40,7 @@ class PostsFragment : Fragment() {
         )
 
         bnd.recyclerPosts.apply {
+            adapter = postsAdapter
             layoutManager = linearLayoutManager
             addItemDecoration(dividerItemDecoration)
         }
