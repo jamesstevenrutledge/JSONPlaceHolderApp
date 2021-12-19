@@ -48,6 +48,7 @@ class PostsFragment : Fragment() {
             addItemDecoration(dividerItemDecoration)
         }
 
+        viewModel.observePostsLiveData(viewLifecycleOwner)
         registerObservers()
 
         return bnd.root

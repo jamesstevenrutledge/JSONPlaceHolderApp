@@ -1,5 +1,6 @@
 package rutledge.james.jsonplaceholderapp.UI.viewmodel
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,11 +16,13 @@ class PostsViewModel(
     private val mutablePostsLiveData: MutableLiveData<List<Post>> = MutableLiveData()
 
     init {
-        postsRepository.postLiveData.observeForever {
+        refreshPosts()
+    }
+
+    fun observePostsLiveData(lifecycleOwner: LifecycleOwner) {
+        postsRepository.postLiveData.observe(lifecycleOwner) {
             mutablePostsLiveData.postValue(it)
         }
-
-        refreshPosts()
     }
 
     // Call refreshPosts() if you want to get any updates to the posts list
