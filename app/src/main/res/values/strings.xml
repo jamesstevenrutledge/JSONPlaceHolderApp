@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">JSON Placeholder App</string>
+    <string name="comments_header">Comments</string>
 </resources>

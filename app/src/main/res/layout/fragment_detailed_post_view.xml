@@ -13,6 +13,40 @@
 
     </include>
 
+    <View
+        android:id="@+id/decoration1"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginVertical="4dp"
+        android:background="@color/design_default_color_on_secondary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inclPost" />
+
+    <TextView
+        android:id="@+id/CommentsSectionHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="4dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/comments_header"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/decoration1" />
+
+    <View
+        android:id="@+id/decoration2"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginVertical="4dp"
+        android:background="@color/design_default_color_on_secondary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CommentsSectionHeader" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerComments"
         android:layout_width="match_parent"
@@ -20,6 +54,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inclPost" />
+        app:layout_constraintTop_toBottomOf="@+id/decoration2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

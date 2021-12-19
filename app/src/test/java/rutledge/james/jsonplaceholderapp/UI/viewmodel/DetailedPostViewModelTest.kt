@@ -2,6 +2,7 @@ package rutledge.james.jsonplaceholderapp.UI.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import org.junit.*
+import rutledge.james.jsonplaceholderapp.data.model.Comment
 import rutledge.james.jsonplaceholderapp.data.model.Post
 import rutledge.james.jsonplaceholderapp.repository.FakePostsRepository
 import rutledge.james.jsonplaceholderapp.tools.ManualLifecycleOwner
@@ -97,6 +98,84 @@ class DetailedPostViewModelTest {
 
         // And finish
         Assert.assertNull(after)
+    }
+
+    @Test
+    fun `Test getting comments`() {
+        // Given
+        val comments = mutableListOf<Comment>()
+        comments.add(
+            Comment(11, 12, "Name 1", "Email 1", "Body 1")
+        )
+        comments.add(
+            Comment(11, 22, "Name 2", "Email 2", "Body 2")
+        )
+        comments.add(
+            Comment(11, 32, "Name 3", "Email 3", "Body 3")
+        )
+
+        var before: List<Comment>? = null
+        var after: List<Comment>? = null
+
+        // When
+        detailedPostViewModel.observeCommentLiveData(lifecycleOwner)
+        fakePostsRepository.setCommentsToGet(comments)
+
+        detailedPostViewModel.observablePostComments.value?.let {
+            before = it
+        }
+
+        detailedPostViewModel.setPost(11)
+
+        detailedPostViewModel.observablePostComments.value?.let {
+            after = it
+        }
+
+        // Then
+        // The list should start empty
+        Assert.assertEquals(emptyList<Post>(), before)
+
+        // And finish populated correctly
+        Assert.assertEquals(comments, after)
+    }
+
+    @Test
+    fun `Test getting comments when comments are for a different post`() {
+        // Given
+        val comments = mutableListOf<Comment>()
+        comments.add(
+            Comment(22, 12, "Name 1", "Email 1", "Body 1")
+        )
+        comments.add(
+            Comment(23, 22, "Name 2", "Email 2", "Body 2")
+        )
+        comments.add(
+            Comment(43, 32, "Name 3", "Email 3", "Body 3")
+        )
+
+        var before: List<Comment>? = null
+        var after: List<Comment>? = null
+
+        // When
+        detailedPostViewModel.observeCommentLiveData(lifecycleOwner)
+        fakePostsRepository.setCommentsToGet(comments)
+
+        detailedPostViewModel.observablePostComments.value?.let {
+            before = it
+        }
+
+        detailedPostViewModel.setPost(11)
+
+        detailedPostViewModel.observablePostComments.value?.let {
+            after = it
+        }
+
+        // Then
+        // The list should start empty
+        Assert.assertEquals(emptyList<Post>(), before)
+
+        // And finish empty
+        Assert.assertEquals(emptyList<Post>(), after)
     }
 
     @After

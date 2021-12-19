@@ -4,6 +4,7 @@ import android.util.Log
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import rutledge.james.jsonplaceholderapp.data.model.Comment
 import rutledge.james.jsonplaceholderapp.data.model.Post
 import rutledge.james.jsonplaceholderapp.util.Tools.TAG
 
@@ -44,5 +45,44 @@ object PostMapper {
         }
 
         return posts
+    }
+
+    /** Turn a JSON object into comment object.
+     * Returns null if the object is invalid
+     */
+    fun JSONToComment(JSONPost: JSONObject): Comment? {
+        return try {
+            Comment(
+                JSONPost["postId"] as Int,
+                JSONPost["id"] as Int,
+                JSONPost["name"] as String,
+                JSONPost["email"] as String,
+                JSONPost["body"] as String,
+            )
+        } catch (JSONException: JSONException) {
+            Log.d(TAG, "JSONToComment: ${JSONException.message}, not a valid post JSON object")
+            null
+        }
+    }
+
+    /**
+     * Convert a JSONArray into a list of comment objects.
+     * Will only include valid comment objects.
+     */
+    fun JSONToComments(JSONPosts: JSONArray): List<Comment> {
+        val comments = mutableListOf<Comment>()
+
+        for (i in 0 until JSONPosts.length()) {
+            val comment = JSONToComment(
+                JSONPosts[i] as JSONObject
+            )
+
+            // If the comment is valid, add it to the comment list
+            comment?.let {
+                comments.add(it)
+            }
+        }
+
+        return comments
     }
 }
