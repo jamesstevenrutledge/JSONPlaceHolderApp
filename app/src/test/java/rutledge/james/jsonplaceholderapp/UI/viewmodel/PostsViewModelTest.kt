@@ -42,13 +42,13 @@ class PostsViewModelTest {
         postsViewModel.observePostsLiveData(lifecycleOwner)
         fakePostsRepository.setPostsToGet(posts)
 
-        fakePostsRepository.postLiveData.value?.let {
+        postsViewModel.observablePosts.value?.let {
             before = it
         }
 
         postsViewModel.refreshPosts()
 
-        fakePostsRepository.postLiveData.value?.let {
+        postsViewModel.observablePosts.value?.let {
             after = it
         }
 
