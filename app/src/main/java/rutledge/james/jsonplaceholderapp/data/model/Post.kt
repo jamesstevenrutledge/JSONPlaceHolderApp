@@ -2,7 +2,7 @@ package rutledge.james.jsonplaceholderapp.data.model
 
 data class Post(
         val userId: Int,
-        val id: Int,
+        val postId: Int,
         val title: String,
         val body: String
 )

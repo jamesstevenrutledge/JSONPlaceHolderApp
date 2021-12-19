@@ -20,7 +20,7 @@ class PostsViewModel(
     }
 
     fun observePostsLiveData(lifecycleOwner: LifecycleOwner) {
-        postsRepository.postLiveData.observe(lifecycleOwner) {
+        postsRepository.postsLiveData.observe(lifecycleOwner) {
             mutablePostsLiveData.postValue(it)
         }
     }
